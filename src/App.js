@@ -1,4 +1,4 @@
-import firebase from './Firebase'
+/* import firebase from './Firebase'
 import { useEffect, useState } from 'react'
 import {
   addDoc,
@@ -8,11 +8,11 @@ import {
   getFirestore,
   onSnapshot,
   updateDoc
-} from 'firebase/firestore'
-import { async } from '@firebase/util'
+} from 'firebase/firestore' */
+import Products from './pages/Products'
 
 function App() {
-  // useState
+/*   // useState
 const [data, setData] = useState([])
 const [newProduct, setNewProduct] = useState("")
 const [newCategory, setNewCategory] = useState("")
@@ -39,28 +39,28 @@ useEffect(() => {
 
 
 // Add Item
-const addItem = async () => {
+const addItem = () => {
   
-  await addDoc(colRef, {name: newProduct, category: newCategory});
+  addDoc(colRef, {name: newProduct, category: newCategory});
 }
 
 // Update Item
-const updateItem = async (id, price) => {
+const updateItem = (id, price) => {
   const itemDoc = doc(db, "jumia_products", id)
   const newUpdate = {price: price + 1}
-  await updateDoc(itemDoc, newUpdate)
+  updateDoc(itemDoc, newUpdate)
 }
 
 // Delete item
-const deleteItem = async (id) => {
+const deleteItem = (id) => {
 
   const itemDoc = doc(db, "jumia_products", id)
-  await deleteDoc(itemDoc)
-}
+  deleteDoc(itemDoc)
+} */
   
   return (
     <div className="App">
-      <form onSubmit={addItem}>
+      {/* <form onSubmit={addItem}>
         <input 
           type="text"
           placeholder='New Product'
@@ -93,7 +93,9 @@ const deleteItem = async (id) => {
             >Delete Item</button>
           </div>
         ))
-      }
+      } */}
+
+      <Products />
     </div>
   );
 }
