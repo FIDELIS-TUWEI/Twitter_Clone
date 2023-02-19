@@ -75,7 +75,7 @@ const Products = () => {
 
                         <button onClick={() => {
                         updateItem(items.id, items.price)
-                        }}>Update Item Price</button>
+                        }}>Update Price</button>
 
                         <button
                         onClick={() => {deleteItem(items.id)}}
