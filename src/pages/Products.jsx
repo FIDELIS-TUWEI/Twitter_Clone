@@ -13,6 +13,7 @@ import Form from './Form'
 
 const Products = () => {
     // useState
+    const [data, setData] = useState([])
     const [newProduct, setNewProduct] = useState("")
     const [newCategory, setNewCategory] = useState("")
 
@@ -59,27 +60,27 @@ const Products = () => {
     return ( 
         <>
             <Form 
-                add={addItem}
+                addItem={addItem}
                 setNewProduct={setNewProduct}
                 setNewCategory={setNewCategory}
             />
 
             {
                 data.map((items) => (
-                <div key={items.id}>
-                    <h2>{items.name}</h2>
-                    <p>{items.category}</p>
-                    <img src={items.image_url} alt={items.name}/>
-                    <p>Ksh. {items.price}/=</p>
+                    <div key={items.id}>
+                        <h2>{items.name}</h2>
+                        <p>{items.category}</p>
+                        <img src={items.image_url} alt={items.name}/>
+                        <p>Ksh. {items.price}/=</p>
 
-                    <button onClick={() => {
-                    updateItem(items.id, items.price)
-                    }}>Update Item Price</button>
+                        <button onClick={() => {
+                        updateItem(items.id, items.price)
+                        }}>Update Item Price</button>
 
-                    <button
-                    onClick={() => {deleteItem(items.id)}}
-                    >Delete Item</button>
-                </div>
+                        <button
+                        onClick={() => {deleteItem(items.id)}}
+                        >Delete Item</button>
+                    </div>
                 ))
             }
         </>

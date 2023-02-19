@@ -1,8 +1,7 @@
 import { useState } from "react";
 
-const Form = () => {
-    const {addItem, setNewProduct, setNewCategory} = useState();
-    
+const Form = ({addItem, setNewProduct, setNewCategory}) => {
+
     return ( 
         <div>
             <form onSubmit={addItem}>
