@@ -1,17 +1,19 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { getAuth } from 'firebase/auth'
 
-    const firebaseConfig = {
-    apiKey: "AIzaSyCsLoBiTYPq-305XSzfN0DbZpfoC4bHfCc",
-    authDomain: "fleekyffect.firebaseapp.com",
-    projectId: "fleekyffect",
-    storageBucket: "fleekyffect.appspot.com",
-    messagingSenderId: "290744464462",
-    appId: "1:290744464462:web:d76f511b14d24ba37e7f1f",
-    measurementId: "G-5DJBGRB05D"
-    };
+const firebaseConfig = {
+  apiKey: "AIzaSyBmhC-xWmaQMoWo-3colJOSao5WUkAzVpU",
+  authDomain: "cloudffect-auth.firebaseapp.com",
+  projectId: "cloudffect-auth",
+  storageBucket: "cloudffect-auth.appspot.com",
+  messagingSenderId: "129879580835",
+  appId: "1:129879580835:web:fb4d27cec5261383041f16",
+  measurementId: "G-YHQC6XVQH6"
+};
 
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+export const auth = getAuth()
 
