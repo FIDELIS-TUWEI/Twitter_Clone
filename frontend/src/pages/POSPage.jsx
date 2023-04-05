@@ -1,8 +1,17 @@
+import { useEffect } from "react";
+import MainLayout from "../layouts/MainLayout"
+
 const POSPage = () => {
+
+    // get data from backend
+    useEffect(() => {
+        
+    },[]);
+
     return ( 
-        <div>
-            POS page
-        </div>
+        <MainLayout>
+            POS content
+        </MainLayout>
      );
 }
  
