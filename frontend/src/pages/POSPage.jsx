@@ -7,6 +7,7 @@ const POSPage = () => {
     // useState
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [cart, setCart] = useState([]);
 
     // function to fetch products
     const fetchProducts = async() => {
@@ -20,15 +21,29 @@ const POSPage = () => {
         }
     }
 
+    // add product to cart function
+    const addProductToCart = async(product) => {
+        // check if adding product exist
+        let findProductInCart = await cart.find(i=> {
+            return i.id === product.id
+        });
+
+        if(findProductInCart) {
+            //
+        }else {
+            let addingProduct = {
+                ...product,
+                'quantity': 1,
+                'totalAmount': product.price,
+            }
+            setCart([...cart, addingProduct]);
+        }
+    }
+
     // get data from backend
     useEffect(() => {
         fetchProducts();
     }, []);
-
-    // useEffect for products
-    useEffect(() => {
-        console.log(products)
-    }, [products])
 
     return ( 
         <MainLayout>
@@ -37,7 +52,7 @@ const POSPage = () => {
                     { isLoading ? 'Loading' : <div className="row">
                         {products.map((product, key) => 
                             <div key={key} className="col-lg-4">
-                                <div className="border">
+                                <div className="border" onClick={() => addProductToCart(product)}>
                                     <p>{product.name}</p>
                                     <img src={product.image} className="img-fluid" alt={product.name} />
                                     <p>${product.price}</p>
