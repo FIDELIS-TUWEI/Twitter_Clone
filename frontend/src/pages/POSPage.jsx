@@ -29,7 +29,23 @@ const POSPage = () => {
         });
 
         if(findProductInCart) {
-            //
+            let newCart = [];
+            let newItem;
+
+            cart.forEach(cartItem => {
+                if(cartItem.id === product.id) {
+                    newItem = {
+                        ...cartItem,
+                        quantity: cartItem.quantity + 1,
+                        totalAmount: cartItem.price * (cartItem.quantity + 1)
+                    }
+                    newCart.push(newItem);
+                }else {
+                    newCart.push(cartItem)
+                }
+            });
+
+            setCart(newCart);
         }else {
             let addingProduct = {
                 ...product,
@@ -61,6 +77,35 @@ const POSPage = () => {
                         )}
                     </div>}
                     
+                </div>
+                <div className="col-lg-4">
+                    <div className="table-responsive bg-dark">
+                        <table className="table table-responsive table-dark table-hover">
+                            <thead>
+                                <tr>
+                                    <td>#</td>
+                                    <td>Name</td>
+                                    <td>Price</td>
+                                    <td>Qty</td>
+                                    <td>Total</td>
+                                    <td>Action</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                { cart ? cart.map((cartProduct, key) => <tr key={key}>
+                                    <td>{cartProduct.id}</td>
+                                    <td>{cartProduct.name}</td>
+                                    <td>{cartProduct.price}</td>
+                                    <td>{cartProduct.quantity}</td>
+                                    <td>{cartProduct.totalAmount}</td>
+                                    <td>
+                                        <button className="btn btn-danger btn-sm">Remove</button>
+                                    </td>
+                                </tr>)
+                                : 'No Item in cart'}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </MainLayout>
