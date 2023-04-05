@@ -56,6 +56,12 @@ const POSPage = () => {
         }
     }
 
+    // function to remove product from cart
+    const removeProduct = async(product) => {
+        const newCart = cart.filter(cartItem => cartItem.id !== product.id);
+        setCart(newCart);
+    }
+
     // get data from backend
     useEffect(() => {
         fetchProducts();
@@ -99,7 +105,7 @@ const POSPage = () => {
                                     <td>{cartProduct.quantity}</td>
                                     <td>{cartProduct.totalAmount}</td>
                                     <td>
-                                        <button className="btn btn-danger btn-sm">Remove</button>
+                                        <button className="btn btn-danger btn-sm" onClick={() => removeProduct(cartProduct)}>Remove</button>
                                     </td>
                                 </tr>)
                                 : 'No Item in cart'}
