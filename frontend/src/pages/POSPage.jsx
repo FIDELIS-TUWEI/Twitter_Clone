@@ -1,6 +1,8 @@
 const POSPage = () => {
     return ( 
-        <></>
+        <div>
+            POS page
+        </div>
      );
 }
  
