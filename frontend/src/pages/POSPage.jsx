@@ -35,7 +35,7 @@ const POSPage = () => {
             <div className="row">
                 <div className="col-lg-8">
                     { isLoading ? 'Loading' : <div className="row">
-                        {products.map((product, key) => {
+                        {products.map((product, key) => 
                             <div key={key} className="col-lg-4">
                                 <div className="border">
                                     <p>{product.name}</p>
@@ -43,7 +43,7 @@ const POSPage = () => {
                                     <p>${product.price}</p>
                                 </div>
                             </div>
-                        })}
+                        )}
                     </div>}
                     
                 </div>
