@@ -9,8 +9,13 @@ const POSPage = () => {
 
     // function to fetch products
     const fetchProducts = async() => {
-        const result = await axios.get("products");
-        setProducts(await result.data);
+        try {
+            const result = await axios.get("products");
+            setProducts(await result.data);
+        } catch (error) {
+            console.log(error)
+        }
+        
 
     }
 
