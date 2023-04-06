@@ -8,6 +8,7 @@ const POSPage = () => {
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [cart, setCart] = useState([]);
+    const [totalAmount, setTotalAmount] = useState(0);
 
     // function to fetch products
     const fetchProducts = async() => {
