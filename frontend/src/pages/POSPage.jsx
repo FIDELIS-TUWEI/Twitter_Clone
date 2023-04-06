@@ -112,6 +112,7 @@ const POSPage = () => {
                                 : 'No Item in cart'}
                             </tbody>
                         </table>
+                        <h2 className="px-2 text-white">Total Amount: ${totalAmount}</h2>
                     </div>
                 </div>
             </div>
