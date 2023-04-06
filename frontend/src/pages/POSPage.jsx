@@ -68,6 +68,11 @@ const POSPage = () => {
         fetchProducts();
     }, []);
 
+    // calculate total amount
+    useEffect(() => {
+        
+    }, [cart])
+
     return ( 
         <MainLayout>
             <div className="row">
