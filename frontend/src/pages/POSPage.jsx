@@ -70,7 +70,11 @@ const POSPage = () => {
 
     // calculate total amount
     useEffect(() => {
-        
+        let newTotalAmount = 0;
+        cart.forEach(icart => {
+            newTotalAmount = newTotalAmount + parseInt(icart.totalAmount)
+        })
+        setTotalAmount(newTotalAmount)
     }, [cart])
 
     return ( 
