@@ -86,7 +86,7 @@ const POSPage = () => {
                             <div key={key} className="col-lg-4">
                                 <div className="border" onClick={() => addProductToCart(product)}>
                                     <p>{product.name}</p>
-                                    <img src={product.image} className="img-fluid" alt={product.name} />
+                                    <img src={product.image} className="img-fluid" loading="lazy" alt={product.name} />
                                     <p>${product.price}</p>
                                 </div>
                             </div>
