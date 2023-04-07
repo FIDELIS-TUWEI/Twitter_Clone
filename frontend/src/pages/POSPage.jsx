@@ -72,6 +72,11 @@ const POSPage = () => {
         setCart(newCart);
     }
 
+    // handlePrint function
+    const handlePrint = () => {
+        
+    }
+
     // get data from backend
     useEffect(() => {
         fetchProducts();
@@ -131,6 +136,14 @@ const POSPage = () => {
                             </tbody>
                         </table>
                         <h2 className="px-2 text-white">Total Amount: ${totalAmount}</h2>
+                    </div>
+
+                    <div className="mt-3">
+                        {
+                            totalAmount !== 0 ? <div>
+                                <button className="btn btn-primary" onClick={handlePrint}>Pay Now</button>
+                            </div> : 'Please add a product to the cart'
+                        }
                     </div>
                 </div>
             </div>
