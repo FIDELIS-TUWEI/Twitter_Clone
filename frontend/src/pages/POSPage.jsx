@@ -108,7 +108,7 @@ const POSPage = () => {
                     { isLoading ? 'Loading' : <div className="row">
                         {products.map((product, key) => 
                             <div key={key} className="col-lg-4">
-                                <div className="border" onClick={() => addProductToCart(product)}>
+                                <div className="pos-item px-3 text-center border" onClick={() => addProductToCart(product)}>
                                     <p>{product.name}</p>
                                     <img src={product.image} className="img-fluid" loading="lazy" alt={product.name} />
                                     <p>${product.price}</p>
