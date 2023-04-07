@@ -1,7 +1,7 @@
 import React from "react";
 
 export const ComponentToPrint = React.forwardRef((props, ref) => {
-    // items in cart to print
+    // items in cart to print in table
     const { cart, totalAmount} = props;
     return ( 
         <div ref={ref}>
@@ -27,7 +27,7 @@ export const ComponentToPrint = React.forwardRef((props, ref) => {
                     : ''}
                 </tbody>
             </table>
-            <h2 className="px-2 text-white">Total Amount: ${totalAmount}</h2>
+            <h2 className="px-2">Total Amount: ${totalAmount}</h2>
         </div>
      );
 });
