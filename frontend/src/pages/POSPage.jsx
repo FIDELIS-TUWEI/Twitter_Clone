@@ -11,6 +11,12 @@ const POSPage = () => {
     const [cart, setCart] = useState([]);
     const [totalAmount, setTotalAmount] = useState(0);
 
+    // toast options
+    const toastOptions = {
+        autoClose: 400,
+        pauseOnHover: true,
+    }
+
     // function to fetch products
     const fetchProducts = async() => {
         try {
@@ -48,7 +54,7 @@ const POSPage = () => {
             });
 
             setCart(newCart);
-            toast(`Added ${newItem.name} to cart`)
+            toast(`Added ${newItem.name} to cart`, toastOptions)
         }else {
             let addingProduct = {
                 ...product,
@@ -56,7 +62,7 @@ const POSPage = () => {
                 'totalAmount': product.price,
             }
             setCart([...cart, addingProduct]);
-            toast(`Added ${product.name} to cart`)
+            toast(`Added ${product.name} to cart`, toastOptions)
         }
     }
 
