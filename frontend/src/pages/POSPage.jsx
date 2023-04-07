@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import MainLayout from "../layouts/MainLayout"
 import axios from 'axios'
 import { toast } from "react-toastify";
+import { ComponentToPrint } from "../components/ComponentToPrint";
+import { useReactToPrint } from 'react-to-print';
 
 const POSPage = () => {
 
@@ -72,9 +74,17 @@ const POSPage = () => {
         setCart(newCart);
     }
 
+    // useRef
+    const componentRef = useRef();
+
+    // handleReact to print
+    const handleReactToPrint = useReactToPrint({
+        content: () => componentRef.current,
+    });
+
     // handlePrint function
     const handlePrint = () => {
-        
+        handleReactToPrint();
     }
 
     // get data from backend
@@ -109,6 +119,9 @@ const POSPage = () => {
                     
                 </div>
                 <div className="col-lg-4">
+                    <div style={{display: 'none'}}>
+                        <ComponentToPrint cart={cart} totalAmount={totalAmount} ref={componentRef} />
+                    </div>
                     <div className="table-responsive bg-dark">
                         <table className="table table-responsive table-dark table-hover">
                             <thead>
