@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import MainLayout from "../layouts/MainLayout"
 import axios from 'axios'
+import { toast } from "react-toastify";
 
 const POSPage = () => {
 
@@ -47,6 +48,7 @@ const POSPage = () => {
             });
 
             setCart(newCart);
+            toast(`Added ${newItem.name} to cart`)
         }else {
             let addingProduct = {
                 ...product,
@@ -54,6 +56,7 @@ const POSPage = () => {
                 'totalAmount': product.price,
             }
             setCart([...cart, addingProduct]);
+            toast(`Added ${product.name} to cart`)
         }
     }
 
