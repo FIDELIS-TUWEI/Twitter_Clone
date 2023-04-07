@@ -5,6 +5,7 @@ export const ComponentToPrint = React.forwardRef((props, ref) => {
     const { cart, totalAmount} = props;
     return ( 
         <div ref={ref}>
+            <h2>DevPOS</h2>
             <table className="table">
                 <thead>
                     <tr>
