@@ -4,6 +4,7 @@ import axios from 'axios'
 import { toast } from "react-toastify";
 import { ComponentToPrint } from "../components/ComponentToPrint";
 import { useReactToPrint } from 'react-to-print';
+import {CircularProgress} from '@mui/material'
 
 const POSPage = () => {
 
