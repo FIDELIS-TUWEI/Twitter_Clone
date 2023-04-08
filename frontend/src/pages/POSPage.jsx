@@ -4,6 +4,7 @@ import axios from 'axios'
 import { toast } from "react-toastify";
 import { ComponentToPrint } from "../components/ComponentToPrint";
 import { useReactToPrint } from 'react-to-print';
+import {Box} from "@mui/material";
 import {CircularProgress} from '@mui/material'
 
 const POSPage = () => {
@@ -106,7 +107,10 @@ const POSPage = () => {
         <MainLayout>
             <div className="row">
                 <div className="col-lg-8">
-                    { isLoading ? <CircularProgress color="success" /> : <div className="row">
+                    { isLoading ? <Box sx={{display: 'flex', justifyContent: 'center'}}>
+                            <CircularProgress />
+                        </Box> : <div className="row">
+                            
                         {products.map((product, key) => 
                             <div key={key} className="col-lg-4 mb-4">
                                 <div className="pos-item px-3 text-center border" onClick={() => addProductToCart(product)}>
