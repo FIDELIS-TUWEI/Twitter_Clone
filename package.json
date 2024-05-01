@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon backend/server.js",
+    "start": "node backend/server.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["Backend RESTAPI", "MERN STACK", "Jwt-auth"],
+  "author": "FIDELIS-TUWEI",
   "license": "ISC",
-  "description": "",
+  "description": "Backend RESTAPI for Twitter clone",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.2.0",
