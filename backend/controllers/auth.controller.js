@@ -91,7 +91,7 @@ const login = async (req, res) => {
             profileImg: user.profileImg,
             coverImg: user.coverImg
         });
-        
+
     } catch (error) {
         logger.error("Error in login controller", error.message);
         res.status(500).json({ error: "Internal Server Error" });
@@ -99,11 +99,26 @@ const login = async (req, res) => {
 };
 
 const logout = async (req, res) => {
-    res.json({
-        data: "You have reached the logout endpoint"
-    });
+    try {
+        res.cookie("jwt", "", { maxAge: 0 });
+        res.status(200).json({ message: "Logged out successfully" })
+    } catch (error) {
+        logger.error("Error in logout controller", error.message);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};
+
+const getMe = async (req, res) => {
+    try {
+        const user = await User.findById(req.user._id).select("-password");
+        res.status(200).json(user);
+
+    } catch (error) {
+        logger.error("Error in getMe controller", error.message);
+        res.status(500).json({ error: "Internal Server Error" });
+    };
 };
 
 module.exports = {
-    signup, login, logout
+    signup, login, logout, getMe
 };
