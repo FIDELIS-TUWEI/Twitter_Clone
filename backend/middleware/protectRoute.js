@@ -9,7 +9,7 @@ const protectRoute = async (req, res, next) => {
     
         // check if token exists
         if (!token) {
-            return res.status(401).json({ error: "Unauthorized: No Token found!" });
+            return res.status(401).json({ error: "Unauthorized: No Token Provided!" });
         };
     
         const decoded = jwt.verify(token, config.JWT_SECRET);
