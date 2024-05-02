@@ -3,7 +3,8 @@ const cors = require("cors");
 const app = express();
 const authRoutes = require("./routes/auth.routes");
 
-app.use(express.json());
+app.use(express.json()); // to parse req.body
+app.use(express.urlencoded({ extended: true })); // to parse form data(urlencoded)
 app.use(cors());
 app.disable("x-powered-by");
 
