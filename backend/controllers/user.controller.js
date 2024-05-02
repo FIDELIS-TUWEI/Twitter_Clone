@@ -1,4 +1,5 @@
 const User = require("../models/user.model");
+const Notification = require("../models/notification.model");
 const logger = require("../utils/logger");
 
 const getUserProfile = async (req, res) => {
@@ -47,8 +48,16 @@ const followUnfollowUser = async (req, res) => {
             await User.findByIdAndUpdate(req.user._id, { $push: { following: id } }) // add user to the following user's array
 
             // send notification
+            const newNotification = new Notification({
+                type: "follow",
+                from: req.user._id,
+                to: userToModify._id
+            });
+
+            await newNotification.save();
             res.status(200).json({ message: "User followed successfully" });
-        }
+        };
+        
     } catch (error) {
         logger.error("Error in followUnfollowUser controller", error.message);
         res.status(500).json({ error: error.message });
