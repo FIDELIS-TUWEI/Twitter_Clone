@@ -4,6 +4,9 @@ const cookieParser = require("cookie-parser");
 const app = express();
 const authRoutes = require("./routes/auth.routes");
 const userRoutes = require("./routes/user.routes");
+const cloudinaryConfig = require("./cloudinary/cloudinary.config");
+
+cloudinaryConfig();
 
 app.use(express.json()); // to parse req.body
 app.use(express.urlencoded({ extended: true })); // to parse form data(urlencoded)
