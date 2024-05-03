@@ -62,7 +62,7 @@ const signup = async (req, res) => {
         }
 
     } catch (error) {
-        logger.error("Error in signup controller", error.message);
+        logger.error("Error in signup controller", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 };
@@ -93,7 +93,7 @@ const login = async (req, res) => {
         });
 
     } catch (error) {
-        logger.error("Error in login controller", error.message);
+        logger.error("Error in login controller", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 };
@@ -103,7 +103,7 @@ const logout = async (req, res) => {
         res.cookie("jwt", "", { maxAge: 0 });
         res.status(200).json({ message: "Logged out successfully" })
     } catch (error) {
-        logger.error("Error in logout controller", error.message);
+        logger.error("Error in logout controller", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 };
@@ -114,7 +114,7 @@ const getMe = async (req, res) => {
         res.status(200).json(user);
 
     } catch (error) {
-        logger.error("Error in getMe controller", error.message);
+        logger.error("Error in getMe controller", error);
         res.status(500).json({ error: "Internal Server Error" });
     };
 };
