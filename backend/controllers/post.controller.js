@@ -33,11 +33,19 @@ const createPost = async (req, res) => {
         res.status(201).json(newPost);
 
     } catch (error) {
-        logger.error("Error in createPost controller", error.message);
+        logger.error("Error in createPost controller", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 };
 
+const deletePost = async (req, res) => {
+    try {
+        
+    } catch (error) {
+        
+    }
+};
+
 module.exports = {
-    createPost
+    createPost, deletePost
 }
