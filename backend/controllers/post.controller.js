@@ -1,5 +1,6 @@
 const Post = require("../models/post.model");
 const User = require("../models/user.model");
+const Notification = require("../models/notification.model");
 const logger = require("../utils/logger");
 const cloudinary = require("cloudinary").v2;
 
@@ -57,9 +58,49 @@ const commentOnPost = async (req, res) => {
         await post.save();
 
         res.status(200).json(post);
-        
+
     } catch (error) {
         logger.error("Error in commentOnPost controller", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};
+
+const likeUnlikePost = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const { id: postId } = req.params;
+
+        // find post
+        const post = await Post.findById(postId);
+        if (!post) return res.status(404).json({ error: "Post not found!" });
+
+        // check if user liked the post
+        const userLikedPost = post.likes.includes(userId);
+
+        if (userLikedPost) {
+            // unlike the post
+            await Post.updateOne({ _id: postId }, { $pull: { likes: userId } });
+
+            res.status(200).json({ message: "Post Unliked Successfully!" });
+        } else {
+            // like the post
+            post.likes.push(userId);
+            await post.save();
+
+            // send notification
+            const notification = new Notification({
+                from: userId,
+                to: post.user,
+                type: "like"
+            })
+
+            await notification.save();
+
+            res.status(200).json({ message: "Post liked successfully" });
+        };
+
+    } catch (error) {
+        logger.error("Error in likeUnlikePost", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
 };
@@ -92,5 +133,5 @@ const deletePost = async (req, res) => {
 };
 
 module.exports = {
-    createPost, commentOnPost, deletePost
+    createPost, commentOnPost, likeUnlikePost, deletePost
 }
