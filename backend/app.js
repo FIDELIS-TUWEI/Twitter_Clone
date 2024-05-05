@@ -5,6 +5,7 @@ const app = express();
 const authRoutes = require("./routes/auth.route");
 const userRoutes = require("./routes/user.route");
 const postRoutes = require("./routes/post.route");
+const notificationRoutes = require("./routes/notification.route");
 const cloudinaryConfig = require("./cloudinary/cloudinary.config");
 
 cloudinaryConfig();
@@ -22,5 +23,6 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
+app.use("/api/notifications", notificationRoutes);
 
 module.exports = app;
