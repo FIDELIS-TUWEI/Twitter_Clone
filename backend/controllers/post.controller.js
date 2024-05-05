@@ -114,6 +114,33 @@ const getFollowingPosts = async (req, res) => {
     }
 };
 
+const getUserPosts = async (req, res) => {
+    try {
+        const { username } = req.params;
+
+        const user = await User.findOne({ username });
+        if (!user) return res.status(404).json({ error: "User not found" });
+
+        // find user posts
+        const posts = await Post.find({ user: user._id })
+            .sort({ createdAt: -1 })
+            .populate({
+                path: "user",
+                select: "-password"
+            })
+            .populate({
+                path: "comments.user",
+                select: "-password"
+            });
+
+            res.status(200).json(posts);
+
+    } catch (error) {
+        logger.error("Error in getUserPosts", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+}
+
 const commentOnPost = async (req, res) => {
     try {
         const { text } = req.body;
@@ -212,5 +239,5 @@ const deletePost = async (req, res) => {
 };
 
 module.exports = {
-    createPost, getAllPosts, getLikedPosts, getFollowingPosts, commentOnPost, likeUnlikePost, deletePost
+    createPost, getAllPosts, getLikedPosts, getFollowingPosts, getUserPosts, commentOnPost, likeUnlikePost, deletePost
 };
