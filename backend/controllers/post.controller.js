@@ -62,6 +62,39 @@ const getAllPosts = async (req, res) => {
     }
 };
 
+const getLikedPosts = async (req, res) => {
+    const userId = req.params.id;
+    try {
+        const user = await User.findById(userId);
+        if (!user) return res.status(404).json({ error: "User not found" });
+
+        const likedPosts = await Post.find({ _id: { $in: user.likedPosts } })
+            .populate({
+                path: "user",
+                select: "-password"
+            })
+            .populate({
+                path: "comments.user",
+                select: "-password"
+            });
+
+        res.status(200).json(likedPosts);
+        
+    } catch (error) {
+        logger.error("Error in getLikedPosts controller", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};
+
+const getFollowingPosts = async (req, res) => {
+    try {
+        
+    } catch (error) {
+        logger.error("Error in getFollowingPosts controller", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+};
+
 const commentOnPost = async (req, res) => {
     try {
         const { text } = req.body;
@@ -103,11 +136,15 @@ const likeUnlikePost = async (req, res) => {
         if (userLikedPost) {
             // unlike the post
             await Post.updateOne({ _id: postId }, { $pull: { likes: userId } });
+            // updatelikedPosts array by removing userId
+            await User.updateOne({ _id: userId }, { $pull: { likedPosts: postId } });
 
             res.status(200).json({ message: "Post Unliked Successfully!" });
         } else {
             // like the post
             post.likes.push(userId);
+            // update likedPosts array with userId
+            await User.updateOne({ _id: userId }, { $push: { likedPosts: postId } });
             await post.save();
 
             // send notification
@@ -156,5 +193,5 @@ const deletePost = async (req, res) => {
 };
 
 module.exports = {
-    createPost, getAllPosts, commentOnPost, likeUnlikePost, deletePost
+    createPost, getAllPosts, getLikedPosts, getFollowingPosts, commentOnPost, likeUnlikePost, deletePost
 };
