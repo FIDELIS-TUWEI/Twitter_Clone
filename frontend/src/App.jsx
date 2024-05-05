@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import { HomePage, LoginPage, NotificationPage, ProfilePage, SignUpPage } from "./pages";
 import Sidebar from "./components/common/Sidebar";
 import RightPanel from "./components/common/RightPanel";
+import { Toaster } from "react-hot-toast";
 
 
 const App = () => {
@@ -17,6 +18,7 @@ const App = () => {
 
 			</Routes>
 			<RightPanel />
+			<Toaster />
 		</div>
   )
 };
