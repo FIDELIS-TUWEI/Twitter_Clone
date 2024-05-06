@@ -11,7 +11,7 @@ const cloudinaryConfig = require("./cloudinary/cloudinary.config");
 
 cloudinaryConfig();
 
-app.use(express.json()); // to parse req.body
+app.use(express.json({ limit: "5mb" })); // to parse req.body // limit shouldn't be too high to prevent DoS attack
 app.use(express.urlencoded({ extended: true })); // to parse form data(urlencoded)
 app.use(cookieParser());
 app.use(cors());
