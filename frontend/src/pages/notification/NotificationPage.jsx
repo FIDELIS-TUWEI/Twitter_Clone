@@ -4,35 +4,58 @@ import LoadingSpinner from "../../components/common/LoadingSpinner";
 import { IoSettingsOutline } from "react-icons/io5";
 import { FaUser } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa6";
+import { avatarPlaceholder } from "../../assets/index";
 
-import { boy2, girl1 } from "../../assets/index";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-hot-toast";
 
 const NotificationPage = () => {
-	const isLoading = false;
-	const notifications = [
-		{
-			_id: "1",
-			from: {
-				_id: "1",
-				username: "johndoe",
-				profileImg: boy2,
-			},
-			type: "follow",
-		},
-		{
-			_id: "2",
-			from: {
-				_id: "2",
-				username: "janedoe",
-				profileImg: girl1,
-			},
-			type: "like",
-		},
-	];
+	const queryClient = useQueryClient();
 
-	const deleteNotifications = () => {
-		alert("All notifications deleted");
-	};
+	const { data: notifications, isLoading } = useQuery({
+		queryKey: ["notifications"],
+		queryFn: async () => {
+			try {
+				const res = await fetch(`/api/notifications`);
+
+				const data = await res.json();
+
+				if (!res.ok) throw new Error(data.error || "Something went wrong");
+
+				return data;
+
+			} catch (error) {
+				throw new Error(error)
+			}
+		}
+	});
+
+	const { mutate: deleteNotifications } = useMutation({
+		mutationFn: async () => {
+			try {
+				const res = await fetch(`/api/notifications`, {
+					method: "DELETE",
+				});
+
+				const data = await res.json();
+
+
+				if (!res.ok) throw new Error(data.error || "Something went wrong");
+
+				return data;
+
+			} catch (error) {
+				throw new Error(error);
+			}
+		},
+		onSuccess: () => {
+			toast.success("Notifications deleted successfully");
+			queryClient.invalidateQueries({ queryKey: ["notifications"] });
+		},
+		onError: (error) => {
+			toast.error(error.message);
+		}
+	})
 
 	return (
 			<div className='flex-[4_4_0] border-l border-r border-gray-700 min-h-screen'>
@@ -66,7 +89,7 @@ const NotificationPage = () => {
 							<Link to={`/profile/${notification.from.username}`}>
 								<div className='avatar'>
 									<div className='w-8 rounded-full'>
-										<img src={notification.from.profileImg || "/avatar-placeholder.png"} alt="" />
+										<img src={notification.from.profileImg || avatarPlaceholder} alt="" />
 									</div>
 								</div>
 								<div className='flex gap-1'>
