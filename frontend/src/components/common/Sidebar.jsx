@@ -21,8 +21,7 @@ const Sidebar = () => {
 				const data = await res.json();
 				if (!res.ok) throw new Error(data.error || "Something went wrong");
 			} catch (error) {
-				console.error(error);
-				throw error;
+				throw new Error (error);
 			}
 		},
 		onSuccess: () => {

@@ -29,8 +29,7 @@ const LoginPage = () => {
 				if (!res.ok) throw new Error(data.error || "Failed to login");
 				return data;
 			} catch (error) {
-				console.error(error);
-				throw error
+				throw new Error(error);
 			}
 		},
 		onSuccess: () => {
