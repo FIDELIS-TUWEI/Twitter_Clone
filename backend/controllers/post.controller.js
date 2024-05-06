@@ -15,7 +15,7 @@ const createPost = async (req, res) => {
         if (!user) return res.status(404).json({ error: "User not found!" });
 
         // check if text and image are in req.body
-        if (!text || !img) return res.status(400).json({ error: "Post must have text or image" });
+        if (!text && !img) return res.status(400).json({ error: "Post must have text or image" });
 
         // upload image to cloudinary
         if (img) {
