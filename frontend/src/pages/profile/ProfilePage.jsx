@@ -13,12 +13,14 @@ import { FaLink } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 
 import { avatarPlaceholder, cover } from "../../assets/index";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { formatMemberSinceDate } from "../../utils/date";
 import useFollow from "../../hooks/useFollow";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
+import toast from "react-hot-toast";
 
 const ProfilePage = () => {
+	const queryClient = useQueryClient();
 	const { username } = useParams();
 	const { follow, isPending } = useFollow()
 	const { data: authUser } = useQuery({ queryKey: ["authUser"] });
@@ -30,7 +32,7 @@ const ProfilePage = () => {
 	const coverImgRef = useRef(null);
 	const profileImgRef = useRef(null);
 
-
+	// Logic to query/fetch user profile data
 	const { data: user, isLoading, refetch, isRefetching } = useQuery({
 		queryKey: ["userProfile"],
 		queryFn: async () => {
@@ -46,6 +48,40 @@ const ProfilePage = () => {
 			} catch (error) {
 				throw new Error(error);
 			}
+		}
+	});
+
+	// Logic to mutate/ update user profileImf or coverImg
+	const { mutate: updateProfile, isPending: isUpdatingProfile } = useMutation({
+		mutationFn: async () => {
+			try {
+				const res = await fetch(`/api/users/update`, {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({ profileImg, coverImg }),
+				});
+
+				const data = await res.json();
+
+				if (!res.ok) throw new Error(data.error || "Something went wrong");
+
+				return data;
+
+			} catch (error) {
+				throw new Error(error.message);
+			}
+		},
+		onSuccess: () => {
+			toast.success("Profile updated successfully");
+			Promise.all([
+				queryClient.invalidateQueries({ queryKey: ["authUser"] }),
+				queryClient.invalidateQueries({ queryKey: ["userProfile"] }),
+			]);
+		},
+		onError: (error) => {
+			toast.error(error.message);
 		}
 	});
 
@@ -146,9 +182,9 @@ const ProfilePage = () => {
 								{(coverImg || profileImg) && (
 									<button
 										className='btn btn-primary rounded-full btn-sm text-white px-4 ml-2'
-										onClick={() => alert("Profile updated successfully")}
+										onClick={() => updateProfile()}
 									>
-										Update
+										{isUpdatingProfile ? "Updating..." : "Update"}
 									</button>
 								)}
 							</div>
