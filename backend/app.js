@@ -6,6 +6,7 @@ const authRoutes = require("./routes/auth.route");
 const userRoutes = require("./routes/user.route");
 const postRoutes = require("./routes/post.route");
 const notificationRoutes = require("./routes/notification.route");
+const middleware = require("./utils/middleware");
 const cloudinaryConfig = require("./cloudinary/cloudinary.config");
 
 cloudinaryConfig();
@@ -14,6 +15,7 @@ app.use(express.json()); // to parse req.body
 app.use(express.urlencoded({ extended: true })); // to parse form data(urlencoded)
 app.use(cookieParser());
 app.use(cors());
+app.use(middleware.requestLogger)
 app.disable("x-powered-by");
 
 app.get("/", (req, res) => {
@@ -24,5 +26,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/notifications", notificationRoutes);
+app.use(middleware.unknownEndPoint);
+app.use(middleware.errorHandler);
 
 module.exports = app;
